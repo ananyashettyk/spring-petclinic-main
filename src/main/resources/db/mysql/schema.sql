@@ -32,6 +32,8 @@ CREATE TABLE IF NOT EXISTS owners (
   address VARCHAR(255),
   city VARCHAR(80),
   telephone VARCHAR(20),
+  email VARCHAR(255),
+  notification_preference ENUM('EMAIL', 'SMS', 'BOTH', 'NONE') DEFAULT 'NONE',
   INDEX(last_name)
 ) engine=InnoDB;
 
