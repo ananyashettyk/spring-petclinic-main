@@ -21,5 +21,7 @@ package org.springframework.samples.petclinic.model;
  * @author Claude
  */
 public enum NotificationPreference {
+
 	EMAIL, SMS, BOTH, NONE
+
 }

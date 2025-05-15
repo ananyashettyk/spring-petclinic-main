@@ -110,7 +110,8 @@ public class Owner extends Person {
 	}
 
 	public void setNotificationPreference(NotificationPreference notificationPreference) {
-		this.notificationPreference = notificationPreference != null ? notificationPreference : NotificationPreference.NONE;
+		this.notificationPreference = notificationPreference != null ? notificationPreference
+				: NotificationPreference.NONE;
 	}
 
 	public void setTelephone(String telephone) {
