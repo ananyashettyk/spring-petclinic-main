@@ -16,12 +16,30 @@
 package org.springframework.samples.petclinic.notification;
 
 /**
- * Enumeration of notification statuses for the pet clinic system.
+ * Enumeration of possible notification statuses for tracking notification delivery.
  *
  * @author Claude
  */
 public enum NotificationStatus {
 
-	PENDING, SENT, FAILED, CANCELLED
+	/**
+	 * Notification is pending delivery
+	 */
+	PENDING,
+
+	/**
+	 * Notification has been successfully sent
+	 */
+	SENT,
+
+	/**
+	 * Notification delivery has failed
+	 */
+	FAILED,
+
+	/**
+	 * Notification was skipped (e.g., due to owner preferences)
+	 */
+	SKIPPED
 
 }
