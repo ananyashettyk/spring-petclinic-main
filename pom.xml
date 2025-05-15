@@ -153,15 +153,18 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
+    <!-- Jakarta Mail API (JavaMail) -->
     <dependency>
-      <groupId>com.sun.mail</groupId>
+      <groupId>org.eclipse.angus</groupId>
       <artifactId>jakarta.mail</artifactId>
+      <version>2.0.2</version>
     </dependency>
 
+    <!-- Twilio SDK for SMS notifications -->
     <dependency>
       <groupId>com.twilio.sdk</groupId>
       <artifactId>twilio</artifactId>
-      <version>9.2.0</version> <!-- latest stable as of 2024 -->
+      <version>9.10.0</version>
     </dependency>
 
   </dependencies>
