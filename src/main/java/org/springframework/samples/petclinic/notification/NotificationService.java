@@ -15,107 +15,33 @@
  */
 package org.springframework.samples.petclinic.notification;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.NotificationPreference;
-import org.springframework.samples.petclinic.owner.Pet;
-import org.springframework.samples.petclinic.owner.Visit;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.samples.petclinic.owner.Owner;
 
 /**
- * Service class for managing notification schedules.
+ * Interface for notification services in the pet clinic application. Defines methods for
+ * sending notifications to pet owners.
  *
  * @author Claude
  */
-@Service
-public class NotificationService {
-
-	private final NotificationScheduleRepository notificationScheduleRepository;
-
-	@Autowired
-	public NotificationService(NotificationScheduleRepository notificationScheduleRepository) {
-		this.notificationScheduleRepository = notificationScheduleRepository;
-	}
+public interface NotificationService {
 
 	/**
-	 * Create a new notification schedule for a visit.
-	 * @param visit the visit
-	 * @param pet the pet
-	 * @param notificationPreference the notification preference
-	 * @param scheduledTime the scheduled time
-	 * @param message the message
-	 * @return the created notification schedule
+	 * Sends a notification based on the provided NotificationSchedule. The implementation
+	 * should determine how to send the notification based on Owner preferences and the
+	 * provided NotificationSchedule details.
+	 * @param notificationSchedule the notification schedule containing message and timing
+	 * information
+	 * @param owner the pet owner who should receive the notification
+	 * @return true if the notification was sent successfully, false otherwise
 	 */
-	@Transactional
-	public NotificationSchedule scheduleNotification(Visit visit, Pet pet,
-			NotificationPreference notificationPreference, LocalDateTime scheduledTime, String message) {
-		NotificationSchedule notificationSchedule = new NotificationSchedule();
-		notificationSchedule.setVisit(visit);
-		notificationSchedule.setPet(pet);
-		notificationSchedule.setNotificationPreference(notificationPreference);
-		notificationSchedule.setScheduledTime(scheduledTime);
-		notificationSchedule.setMessage(message);
-
-		this.notificationScheduleRepository.save(notificationSchedule);
-		return notificationSchedule;
-	}
+	boolean sendNotification(NotificationSchedule notificationSchedule, Owner owner);
 
 	/**
-	 * Find a notification schedule by its id.
-	 * @param notificationId the notification id
-	 * @return the notification schedule
+	 * Checks if this notification service can handle the given notification preference.
+	 * @param notificationSchedule the notification schedule to check
+	 * @param owner the pet owner with notification preferences
+	 * @return true if this service can handle the notification, false otherwise
 	 */
-	@Transactional(readOnly = true)
-	public NotificationSchedule findNotificationById(int notificationId) {
-		return this.notificationScheduleRepository.findById(notificationId);
-	}
-
-	/**
-	 * Find all pending notifications.
-	 * @return a collection of pending notifications
-	 */
-	@Transactional(readOnly = true)
-	public Collection<NotificationSchedule> findPendingNotifications() {
-		return this.notificationScheduleRepository.findAllPendingNotifications();
-	}
-
-	/**
-	 * Find notifications for a specific visit.
-	 * @param visitId the visit id
-	 * @return a collection of notifications for the visit
-	 */
-	@Transactional(readOnly = true)
-	public Collection<NotificationSchedule> findNotificationsByVisitId(int visitId) {
-		return this.notificationScheduleRepository.findByVisitId(visitId);
-	}
-
-	/**
-	 * Find notifications for a specific pet.
-	 * @param petId the pet id
-	 * @return a collection of notifications for the pet
-	 */
-	@Transactional(readOnly = true)
-	public Collection<NotificationSchedule> findNotificationsByPetId(int petId) {
-		return this.notificationScheduleRepository.findByPetId(petId);
-	}
-
-	/**
-	 * Update the status of a notification.
-	 * @param notificationId the notification id
-	 * @param status the new status
-	 * @return the updated notification schedule
-	 */
-	@Transactional
-	public NotificationSchedule updateNotificationStatus(int notificationId, NotificationStatus status) {
-		NotificationSchedule notificationSchedule = findNotificationById(notificationId);
-		if (notificationSchedule != null) {
-			notificationSchedule.setStatus(status);
-			this.notificationScheduleRepository.save(notificationSchedule);
-		}
-		return notificationSchedule;
-	}
+	boolean canHandle(NotificationSchedule notificationSchedule, Owner owner);
 
 }

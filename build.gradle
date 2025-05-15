@@ -12,7 +12,7 @@ apply plugin: 'java'
 apply plugin: 'checkstyle'
 apply plugin: 'io.spring.javaformat'
 
-gradle.startParameter.excludedTaskNames += [ "checkFormatAot", "checkFormatAotTest" ]
+gradle.startParameter.excludedTaskNames += ["checkFormatAot", "checkFormatAotTest"]
 
 group = 'org.springframework.samples'
 version = '3.4.0'
@@ -42,6 +42,8 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-validation'
   implementation 'javax.cache:cache-api'
   implementation 'jakarta.xml.bind:jakarta.xml.bind-api'
+  implementation 'jakarta.mail:jakarta.mail-api:2.1.3'
+  implementation 'com.twilio.sdk:twilio:9.2.0'
   runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
   runtimeOnly "org.webjars:webjars-locator-lite:${webjarsLocatorLiteVersion}"
   runtimeOnly "org.webjars.npm:bootstrap:${webjarsBootstrapVersion}"
